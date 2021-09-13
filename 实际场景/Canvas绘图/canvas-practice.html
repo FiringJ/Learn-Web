@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas绘图</title>
+</head>
+<style>
+    #canvas {
+        border: 1px solid #eee;
+    }
+</style>
+<body>
+    <canvas id="canvas" width="500" height="300">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+</body>
+<script>
+    const c = document.getElementById('canvas')
+    const ctx = c.getContext('2d')
+    /* 绘制矩形 */
+    ctx.fillStyle = "#FF0000"
+    ctx.fillRect(0, 0, 200, 100)
+    /* 绘制线条 */
+    ctx.moveTo(0, 0)
+    ctx.lineTo(200, 100)
+    ctx.stroke()
+    /* 绘制圆形 */
+    ctx.beginPath()
+    ctx.arc(100, 50, 25, 0, 2*Math.PI)
+    ctx.stroke()
+    /* 绘制文本 */
+    ctx.font="30px Arial"
+    ctx.fillText("Hello World", 250, 50) // 实心
+    ctx.strokeText("Hello World", 0, 50) // 空心
+    /* 渐变 */
+    const grd = ctx.createLinearGradient(0, 0, 200, 0)
+    grd.addColorStop(0, 'red')
+    grd.addColorStop(1, 'white')
+    ctx.fillStyle = grd
+    ctx.fillRect(0, 110, 200, 100)
+    /* 绘制图像 */
+</script>
+</html>

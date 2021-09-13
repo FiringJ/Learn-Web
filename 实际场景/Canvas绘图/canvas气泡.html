@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas气泡</title>
+</head>
+<style>
+    #canvas {
+        border: 1px solid #eee;
+    }
+</style>
+<body>
+    <canvas id="canvas" width="500" height="300">您的浏览器暂不支持canvas。</canvas>
+</body>
+<script>
+    class Bubble {
+        constructor (ctx) {
+            this.colorList = [[254,158,159], [147,186,255], [217,153,249], [129,199,132], [255,202,98], [255,164,119]]
+            this.ctx = ctx.getContext('2d')
+            this.bubbleList = []
+        }
+        randomInt(a, b) { // 返回随机数
+            return Number.parseInt(Math.random() * (b - a + 1) + a);   //取a-b之间包括ab的随机值
+        }
+        start () {
+            console.log('start');
+            requestAnimationFrame(() => this.draw())
+        }
+        draw () {
+            // 创建气泡
+            this.createBubble()
+            // 清除上一帧
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+            // 绘制当前帧
+            this.bubbleList.forEach(v => {
+                this.ctx.beginPath()
+                this.ctx.fillStyle = `rgb(${v.color[0]}, ${v.color[1]}, ${v.color[2]}, 0.6)`
+                this.ctx.strokeStyle = `rgb(${v.color[0]}, ${v.color[1]}, ${v.color[2]})`
+                this.ctx.arc(v.x, v.y, v.r, 0, Math.PI * 2)
+                this.ctx.fill(); // 绘制填充
+                this.ctx.stroke(); // 绘制边线
+                v.y -= v.yMoveSpeed * 0.1; // Y轴移动
+                v.x += v.xMoveSpeed * 0.05; // X轴移动
+            })
+            // 清除出界气泡
+            this.destroyBubble()
+            // 递归绘制下一帧
+            // setTimeout(() => {
+            //     requestAnimationFrame(() => this.draw())
+            // }, 10)
+            requestAnimationFrame(() => this.draw())
+        }
+        createBubble () {
+            if(this.randomInt(0, 50)) return 0; // 控制生成气泡的数量
+            let bubble = {}
+            bubble.r = this.randomInt(10, 50)
+            bubble.x = this.randomInt(0, this.ctx.canvas.width)
+            bubble.y = this.ctx.canvas.height + bubble.r
+            bubble.xMoveSpeed = this.randomInt(-10, 10)
+            bubble.yMoveSpeed = this.randomInt(5, 10)
+            bubble.color = this.colorList[this.randomInt(0, this.colorList.length - 1)]
+            this.bubbleList.push(bubble)
+        }
+        destroyBubble () {
+            this.bubbleList.forEach((v, i) => {
+                if (v.y < -v.r) {
+                    this.bubbleList.splice(i, 1)
+                }
+            })
+        }
+    }
+
+    const ctx = document.getElementById('canvas')
+    const bubble = new Bubble(ctx)
+    bubble.start()
+</script>
+</html>

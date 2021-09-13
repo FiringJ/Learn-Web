@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calc三栏布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow-y: hidden;
+        }
+        .container {
+            height: 1000px;
+            border: 1px solid #eee;
+        }
+        .container > div{
+            display: inline-block;
+            height: 100%;
+            color: #fff;
+        }
+        .container > .left {
+            width: 200px;
+            background-color: wheat;
+        }
+        .container > .main {
+            width: calc(100% - 400px);
+            background-color: burlywood;
+        }
+        .container > .right {
+            width: 200px;
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left"></div><div class="main"></div><div class="right"></div>
+    </div>
+</body>
+</html>

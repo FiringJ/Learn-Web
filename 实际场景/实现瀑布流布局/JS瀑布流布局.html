@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀑布流布局</title>
+</head>
+<style>
+    #container {
+        position: relative;
+    }
+    .item {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+</style>
+<body>
+    <div id="container"></div>
+</body>
+<script>
+    class WaterFallLayout {
+        constructor (column) {
+            this.counter = 0
+            this.container = document.getElementById('container')
+            this.column = column
+            this.columnHeight = Array(column).fill(0)
+            this.columnWidth = 300
+            this.gap = 3
+            this.colorList = ["#EAA78C", "#F9CD82", "#9ADEAD", "#9CB6E9", "#E49D9B", "#97D7D7", "#ABA0CA", "#9F8BEC","#ACA4D5",
+                "#6495ED", "#7BCDA5", "#76B4EF","#E1C38F","#F6C46A","#B19ED1","#F09B98","#87CECB","#D1A495","#89D196","#FE9E9F", "#93BAFF",
+                "#D999F9", "#81C784", "#FFCA62", "#FFA477"]
+            this.init()
+        }
+        init () {
+            this.appendEle()
+            let endLoad = this.columnHeight.some(v => v > window.innerHeight)
+            if (!endLoad) this.appendEle()
+        }
+        appendEle () {
+            for (let i = 0; i < 12; i++) {
+                let unit = {
+                    height: this.randomInt(100, 500),
+                    color: this.colorList[this.randomInt(0, this.colorList.length - 1)]
+                }
+                let [minHeight, minIndex] = this.getMinColumn()
+                let ele = document.createElement('div')
+                ele.className = 'item'
+                ele.style.background = unit.color
+                ele.style.height = unit.height + 'px'
+                ele.style.width = this.columnWidth + 'px'
+                ele.style.top = minHeight + this.gap + 'px'
+                ele.style.left = (this.columnWidth + this.gap) * minIndex + 'px'
+                ele.innerText = ++this.counter
+                this.columnHeight[minIndex] += (unit.height + this.gap)
+                container.appendChild(ele)
+            }
+        }
+        randomInt (a, b) {
+            return Number.parseInt(Math.random() * (b- a + 1) + a)
+        }
+        getMinColumn () {
+            let minHeight = this.columnHeight[0]
+            let minIndex = 0
+            this.columnHeight.forEach((v, i) => {
+                if (v < minHeight) {
+                    minHeight = v
+                    minIndex = i
+                }
+            })
+            return [minHeight, minIndex]
+        }
+    }
+
+    const layout = new WaterFallLayout(3)
+    window.onscroll = function (){ // 浏览器触底事件
+            var marginBottom = 0;
+            if (document.documentElement.scrollTop){
+                var scrollHeight = document.documentElement.scrollHeight;
+                var scrollTop = document.documentElement.scrollTop + document.body.scrollTop;
+                var clientHeight = document.documentElement.clientHeight;
+                marginBottom= scrollHeight - scrollTop - clientHeight;
+            } else {
+                var scrollHeight = document.body.scrollHeight;
+                var scrollTop = document.body.scrollTop;
+                var clientHeight = document.body.clientHeight;
+                marginBottom= scrollHeight - scrollTop - clientHeight;
+            }
+            if(marginBottom<=0) layout.appendEle();
+        }
+</script>
+</html>
