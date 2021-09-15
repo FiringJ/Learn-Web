@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // function test () {
+  //   let a = null
+  //   return function () {
+  //     console.log(a)
+  //     a++
+  //   }
+  // }
+  // setInterval(test(), 1000)
+</script>
+<script>
+  function student(){
+    var name = "Ming";
+    var sayMyName = function(){ // sayMyName作为内部函数，有权访问父级函数作用域student中的变量
+      console.log(name);
+    }
+    console.dir(sayMyName); // ... [[Scopes]]: Scopes[2] 0: Closure (student) {name: "Ming"} 1: Global ...
+    return sayMyName; // return是为了让外部能访问闭包，挂载到window对象也可以
+  }
+  var stu = student();
+  stu(); // Ming
+</script>
+</body>
+</html>

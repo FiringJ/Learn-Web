@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function A (x) {
+    this.x = x;
+  }
+  A.prototype.x = 1;
+
+  function B (x) {
+    this.x = x;
+  }
+  B.prototype = new A();
+
+  let a = new A(2), b = new B(3);
+  delete b.x;
+</script>
+</body>
+</html>

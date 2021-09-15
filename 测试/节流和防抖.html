@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div style="background: #4C98F7; height: 5000px"></div>
+<script>
+<!-- 非立即防抖 -->
+// function debounce (callback, delay) {
+//   let timer = null
+//   return function () {
+//     clearTimeout(timer)
+//     timer = setTimeout(callback, delay)
+//   }
+// }
+// window.onscroll = debounce(() => {console.log('onscroll')}, 200)
+</script>
+<script>
+<!-- 立即防抖 -->
+function debounce (callback, delay) {
+  let timer = null
+  return function () {
+    console.log(timer)
+    if (!timer) {callback();}
+    clearTimeout(timer)
+    timer = setTimeout(callback, delay)
+  }
+}
+window.onscroll = debounce(() => {console.log('onscroll')}, 200)
+</script>
+</body>
+</html>
+
+
