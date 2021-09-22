@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Float</title>
+  <style type="text/css">
+      .container{
+          border: 1px solid #eee;
+          padding: 5px 0;
+          margin: 5px 0;
+          overflow: auto; /* 触发BFC */
+      }
+      /* BFC 块级格式化上下文 https://github.com/WindrunnerMax/EveryDay/blob/master/CSS/%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87.md */
+      .t1{
+          margin: 0 5px;
+          float: left;
+          background-color: #EEE;
+          height: 100px;
+          width: 100px;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="t1">Float</div>
+  <div class="t1">Float</div>
+  <div class="t1">Float</div>
+  <div style="height: 10px;background-color: blue;"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+      div {
+          border: 1px solid #eee;
+          margin: 5px 0;
+      }
+
+      .t1 {
+          position: static;
+      }
+
+      .t2 {
+          position: relative;
+          bottom: -10px;
+      }
+
+      .t3 {
+          height: 300px;
+          position: relative;
+      }
+
+      .t4 {
+          position: absolute;
+          top: 100px;
+      }
+
+      .t5 {
+          position: fixed;
+          top: 300px;
+      }
+
+      .t6 {
+          position: sticky;
+          top: 0;
+      }
+
+      .t7 {
+          position: relative;
+      }
+
+      .t8 {
+          position: inherit;
+          bottom: -10px;
+      }
+  </style>
+</head>
+<body>
+<div class="t1">static</div>
+<div class="t2">relative</div>
+<div>对比查看效果 元素原本占据空间没有变化 但relative会有偏移</div>
+<div class="t3">
+  <div class="t4">absolute</div>
+</div>
+<div class="t5">fixed</div>
+<div class="t6">sticky</div>
+<div class="t7">
+  <div class="t8">inherit</div>
+</div>
+<div style="height: 1000px">让浏览器出现滚动条</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  async function t1 (v) {
+    t1 = v
+    return t1
+  }
+  t1(1).then(v => {console.log(v)}).catch(e => console.log(e))
+</script>
+
+<script>
+  async function f2 () {
+    return greeting = await Promise.resolve('hello')
+  }
+  f2().then(alert)
+</script>
+</body>
+</html>

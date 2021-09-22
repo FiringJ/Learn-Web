@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  var f1 = function () {
+    console.log(this)
+  }
+  f1()
+  f1.call({})
+  f1.apply(document)
+  f1.bind(window)()
+</script>
+</body>
+</html>
