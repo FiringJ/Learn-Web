@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS选择器</title>
+</head>
+<body>
+<div id="t1"></div>
+
+<script type="text/javascript">
+  const t1 = document.getElementById("t1");
+  console.log(t1); // <div id="t1">D1</div>
+  console.log(Object.prototype.toString.call(t1)); // [object HTMLDivElement]
+  console.log(t1.toString())
+</script>
+</body>
+</html>
