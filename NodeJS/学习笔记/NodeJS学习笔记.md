@@ -344,3 +344,12 @@ console.log(counter2.count());
 7. NET
 
 ### 六、进程管理
+1. 调用终端命令简化目录拷贝
+2. Process
+3. Child Process
+4. Cluster
+
+### 七、异步编程
+1. 回调
+2. 代码设计模式
+3. 域
