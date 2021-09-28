@@ -2,7 +2,8 @@
 
 ### 一、什么是NodeJS，有什么用
 
-NodeJS是JS的运行环境，专门用于操作磁盘文件或搭建HTTP服务器
+NodeJS是JS的运行环境，专门用于操作磁盘文件或搭建HTTP服务器  
+NodeJS擅长高并发
 
 ### 二、NodeJS模块化
 
@@ -88,6 +89,7 @@ console.log(counter2.count());
 结论：counter.js只初始化了一次
 
 **总结：**
+
 1. NodeJS是JS的运行环境，专门用于操作磁盘文件或搭建HTTP服务器
 2. NodeJS使用CommonJS模块化标准，主模块作为程序入口，所有模块在执行过程中只初始化一次
 
@@ -108,7 +110,7 @@ console.log(counter2.count());
         /home/user/lib/foo/bar
         /home/lib/foo/bar
         ```
-    
+
 
 2. 包
    > 将由多个子模块构成的大模块称作包，所有的子模块放在一个目录下
@@ -164,28 +166,30 @@ console.log(counter2.count());
         }
         ```
        如此一来，就同样可以使用require('/home/user/lib/cat')的方式加载模块。NodeJS会根据包目录下的package.json找到入口模块所在位
-    
+
 
 3. 命令行程序
-   - 使用NodeJS编写的东西，要么是一个包，要么是一个命令行程序，而前者最终也会用于开发后者。因此我们在部署代码时需要一些技巧，让用户觉得自己是在使用一个命令行程序  
-   - 例如我们用NodeJS写了个程序，可以把命令行参数原样打印出来。该程序很简单，在主模块内实现了所有功能。并且写好后，我们把该程序部署在/home/user/bin/node-echo.js这个位置。为了在任何目录下都能运行该程序，我们需要使用以下终端命令。
+    - 使用NodeJS编写的东西，要么是一个包，要么是一个命令行程序，而前者最终也会用于开发后者。因此我们在部署代码时需要一些技巧，让用户觉得自己是在使用一个命令行程序
+    -
+   例如我们用NodeJS写了个程序，可以把命令行参数原样打印出来。该程序很简单，在主模块内实现了所有功能。并且写好后，我们把该程序部署在/home/user/bin/node-echo.js这个位置。为了在任何目录下都能运行该程序，我们需要使用以下终端命令。
     ```text
     $ node /home/user/bin/node-echo.js Hello World
     Hello World
     ```
-    这种使用方式看起来不怎么像是一个命令行程序，下边的才是我们期望的方式。
+   这种使用方式看起来不怎么像是一个命令行程序，下边的才是我们期望的方式。
     ```text
     $ node-echo Hello World
     ```
-    假设node-echo.js存放在C:\Users\user\bin目录，并且该目录已经添加到PATH环境变量里了。接下来需要在该目录下新建一个名为node-echo.cmd的文件，文件内容如下：
+   假设node-echo.js存放在C:\Users\user\bin目录，并且该目录已经添加到PATH环境变量里了。接下来需要在该目录下新建一个名为node-echo.cmd的文件，文件内容如下：
     ```text
     @node "C:\User\user\bin\node-echo.js" %*
     ```
-    这样处理后，我们就可以在任何目录下使用node-echo命令了
+   这样处理后，我们就可以在任何目录下使用node-echo命令了
 
 
 4. 工程目录
-    - 了解了以上知识后，现在我们可以来完整地规划一个工程目录了。以编写一个命令行程序为例，一般我们会同时提供命令行模式和API模式两种使用方式，并且我们会借助三方包来编写代码。除了代码外，一个完整的程序也应该有自己的文档和测试用例。因此，一个标准的工程目录都看起来像下边这样
+   -
+   了解了以上知识后，现在我们可以来完整地规划一个工程目录了。以编写一个命令行程序为例，一般我们会同时提供命令行模式和API模式两种使用方式，并且我们会借助三方包来编写代码。除了代码外，一个完整的程序也应该有自己的文档和测试用例。因此，一个标准的工程目录都看起来像下边这样
     ```text
     - /home/user/workspace/node-echo/   # 工程目录
         - bin/                          # 存放命令行相关代码
@@ -199,7 +203,7 @@ console.log(counter2.count());
         package.json                    # 元数据文件
         README.md                       # 说明文件
     ```
-    其中部分文件内容如下:
+   其中部分文件内容如下:
     ```text
     /* bin/node-echo */
     var argv = require('argv'),
@@ -220,11 +224,11 @@ console.log(counter2.count());
 
 
 5. NPM
-   > NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：  
-   - 允许用户从NPM服务器下载别人编写的三方包到本地使用。  
-   - 允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。  
-   - 允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。  
-   > 可以看到，NPM建立了一个NodeJS生态圈，NodeJS开发者和用户可以在里边互通有无。以下分别介绍这三种场景下怎样使用NPM。  
+   > NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：
+    - 允许用户从NPM服务器下载别人编写的三方包到本地使用。
+    - 允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。
+    - 允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。
+   > 可以看到，NPM建立了一个NodeJS生态圈，NodeJS开发者和用户可以在里边互通有无。以下分别介绍这三种场景下怎样使用NPM。
     1. 下载三方包
        ```
        $ npm install argv
@@ -248,7 +252,9 @@ console.log(counter2.count());
             }
         }
         ```
-        这样处理后，在工程目录下就可以使用npm install命令批量安装三方包了。更重要的是，当以后node-echo也上传到了NPM服务器，别人下载这个包时，NPM会根据包中申明的三方包依赖自动下载进一步依赖的三方包。例如，使用npm install node-echo命令时，NPM会自动创建以下目录结构。
+       这样处理后，在工程目录下就可以使用npm
+       install命令批量安装三方包了。更重要的是，当以后node-echo也上传到了NPM服务器，别人下载这个包时，NPM会根据包中申明的三方包依赖自动下载进一步依赖的三方包。例如，使用npm install
+       node-echo命令时，NPM会自动创建以下目录结构。
         ```text
         - project/
             - node_modules/
@@ -264,7 +270,7 @@ console.log(counter2.count());
         ```text
         $ npm install node-echo -g
         ```
-        参数中的-g表示全局安装，因此node-echo会默认安装到以下位置，并且NPM会自动创建好Linux系统下需要的软链文件或Windows系统下需要的.cmd文件。
+       参数中的-g表示全局安装，因此node-echo会默认安装到以下位置，并且NPM会自动创建好Linux系统下需要的软链文件或Windows系统下需要的.cmd文件。
         ```text
         - /usr/local/               # Linux系统下
             - lib/node_modules/
@@ -283,7 +289,7 @@ console.log(counter2.count());
                   ...
         ```
     3. 发布代码
-        > 第一次发布代码前需要注册一个账号，终端下运行`npm adduser`。账号搞定后，接着我们需要编辑package.json文件，加入NPM必需的字段。接着上边node-echo的例子，package.json里必要的字段如下：
+       > 第一次发布代码前需要注册一个账号，终端下运行`npm adduser`。账号搞定后，接着我们需要编辑package.json文件，加入NPM必需的字段。接着上边node-echo的例子，package.json里必要的字段如下：
         ```text
         {
             "name": "node-echo",           # 包名，在NPM服务器上须要保持唯一
@@ -297,7 +303,7 @@ console.log(counter2.count());
             }
         }
         ```
-        > 之后，我们就可以在package.json所在目录下运行npm publish发布代码了
+       > 之后，我们就可以在package.json所在目录下运行npm publish发布代码了
     4. 版本号
        > 使用NPM下载和发布代码时都会接触到版本号。NPM使用语义版本号来管理代码，这里简单介绍一下。  
        语义版本号分为X.Y.Z三位，分别代表主版本号、次版本号和补丁版本号。当代码变更时，版本号按以下原则更新。
@@ -305,7 +311,7 @@ console.log(counter2.count());
         + 如果是新增了功能，但是向下兼容，需要更新Y位。
         + 如果有大变动，向下不兼容，需要更新X位。
     5. 灵机一点
-        + NPM提供了很多命令，例如install和publish，使用npm help可查看所有命令。 
+        + NPM提供了很多命令，例如install和publish，使用npm help可查看所有命令。
         + 使用npm help <command>可查看某条命令的详细帮助，例如npm help install。
         + 在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。
         + 使用npm update <package>可以把当前目录下node_modules子目录里边的对应模块更新至最新版本。
@@ -314,27 +320,62 @@ console.log(counter2.count());
         + 使用npm unpublish <package>@<version>可以撤销发布自己发布过的某个版本代码。
 
 **总结**:
+
 1. 编写代码前先规划好目录结构，才能做到有条不紊。
 2. 稍大些的程序可以将代码拆分为多个模块管理，更大些的程序可以使用包来组织模块。
 3. 合理使用node_modules和NODE_PATH来解耦包的使用方式和物理路径。
 4. 使用NPM加入NodeJS生态圈互通有无。
 5. 想到了心仪的包名时请提前在NPM上抢注。
 
-
 </span>
 
 参考链接：[七天学会nodeJS](https://nqdeng.github.io/7-days-nodejs/)
 
-
 ### 四、文件操作
+
 1. 文件拷贝
+    - 小文件拷贝
+    ```javascript
+    const fs = require('fs')
+    
+    function copy (src, dst) {
+      fs.writeFileSync(dst, fs.readFileSync(src))
+    }
+    
+    function main (argv) {
+      copy(argv[0], argv[1])
+    } 
+    
+    main(process.argv.slice(2))
+    ```
+    - 大文件拷贝
+    ```javascript
+    const fs = require('fs')
+    
+    function copy (src, dst) {
+      fs.createReadStream(src).pipe(fs.createWriteStream(dst))
+    }
+    
+    function main (argv) {
+      copy(argv[0], argv[1])
+    }
+    
+    main(process.argv.slice(2))
+    ```
+
+
 2. Buffer
+    - Buffer 类是直接处理二进制数据的全局类型。 它可以使用多种方式构建
+
+
 3. Stream
+    - 当内存中无法一次装下需要处理的数据时，或者一边读取一边处理更加高效时，我们就需要用到数据流。NodeJS中通过各种Stream来提供对数据流的操作
 4. File System
 5. Path
 6. 遍历目录
 
 ### 五、网络操作
+
 1. 实现HTTP服务器
 2. HTTP
 3. HTTPS
@@ -344,12 +385,14 @@ console.log(counter2.count());
 7. NET
 
 ### 六、进程管理
+
 1. 调用终端命令简化目录拷贝
 2. Process
 3. Child Process
 4. Cluster
 
 ### 七、异步编程
+
 1. 回调
 2. 代码设计模式
 3. 域
